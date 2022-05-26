@@ -18,12 +18,16 @@ public class TgbotManagementServiceSpringApplication {
 	CommandLineRunner lookup(UserClient userClient) {
 		return args -> {
 			long id = 2L;
+			String nick = "ultricies";
 
 			if (args.length > 0) {
 				id = Long.parseLong(args[0]);
+				nick = args[1];
 			}
 			GetUserResponse response = userClient.getUserById(id);
 			System.err.println(response.getUserDTO().getFirstName());
+			GetUserResponse response1 = userClient.getUserByNick(nick);
+			System.err.println(response1.getUserDTO().getFirstName());
 		};
 	}
 }
