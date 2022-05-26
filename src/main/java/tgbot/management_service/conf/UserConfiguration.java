@@ -11,7 +11,7 @@ public class UserConfiguration {
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setContextPath("tgbot.users_service.web_service.wsdl");
+        marshaller.setContextPath("tgbot.users.service");
         return marshaller;
     }
 
