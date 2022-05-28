@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import tgbot.management_service.service.UserClient;
 import tgbot.users.service.GetUserResponse;
+import tgbot.users.service.GetUsersResponse;
+import tgbot.users.service.UserDTO;
 
 @SpringBootApplication
 public class TgbotManagementServiceSpringApplication {
@@ -28,6 +30,11 @@ public class TgbotManagementServiceSpringApplication {
 			System.err.println(response.getUserDTO().getFirstName());
 			GetUserResponse response1 = userClient.getUserByNick(nick);
 			System.err.println(response1.getUserDTO().getFirstName());
+
+			GetUsersResponse usersResponse = userClient.getAllUsers();
+			for (UserDTO userDTO : usersResponse.getUsersList()) {
+				System.out.println(userDTO.getFirstName());
+			}
 		};
 	}
 }

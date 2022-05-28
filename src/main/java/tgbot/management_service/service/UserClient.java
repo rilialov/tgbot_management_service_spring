@@ -2,9 +2,7 @@ package tgbot.management_service.service;
 
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
-import tgbot.users.service.GetUserByIdRequest;
-import tgbot.users.service.GetUserByNickRequest;
-import tgbot.users.service.GetUserResponse;
+import tgbot.users.service.*;
 
 public class UserClient extends WebServiceGatewaySupport {
 
@@ -22,5 +20,12 @@ public class UserClient extends WebServiceGatewaySupport {
         return (GetUserResponse) getWebServiceTemplate()
                 .marshalSendAndReceive("http://localhost:8080/ws/users", getUserByNickRequest,
                         new SoapActionCallback("http://users.tgbot/service/GetUserByNickRequest"));
+    }
+
+    public GetUsersResponse getAllUsers() {
+        GetUsersRequest getUsersRequest = new GetUsersRequest();
+        return (GetUsersResponse) getWebServiceTemplate()
+                .marshalSendAndReceive("http://localhost:8080/ws/users", getUsersRequest,
+                        new SoapActionCallback("http://users.tgbot/service/GetUsersRequest"));
     }
 }
