@@ -5,8 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import tgbot.management_service.service.UserClient;
+import tgbot.users.service.GetAllUsersResponse;
+import tgbot.users.service.GetBooleanResponse;
 import tgbot.users.service.GetUserResponse;
-import tgbot.users.service.GetUsersResponse;
 import tgbot.users.service.UserDTO;
 
 @SpringBootApplication
@@ -31,10 +32,21 @@ public class TgbotManagementServiceSpringApplication {
 			GetUserResponse response1 = userClient.getUserByNick(nick);
 			System.err.println(response1.getUserDTO().getFirstName());
 
-			GetUsersResponse usersResponse = userClient.getAllUsers();
+			GetAllUsersResponse usersResponse = userClient.getAllUsers();
 			for (UserDTO userDTO : usersResponse.getUsersList()) {
 				System.out.println(userDTO.getFirstName());
 			}
+
+//			UserDTO userDTO = response1.getUserDTO();
+//			userDTO.setFirstName("Potter");
+//			GetUserResponse response2 = userClient.updateUser(userDTO);
+//			System.err.println(response2.getUserDTO().getFirstName());
+//
+//			GetBooleanResponse booleanResponse = userClient.deleteUser(11L);
+//			if (booleanResponse.isDeleted()) {
+//				System.err.println("Deleted");
+//			}
+
 		};
 	}
 }
