@@ -31,12 +31,12 @@ public class UserClient extends WebServiceGatewaySupport {
                         new SoapActionCallback(NAMESPACE_URI + "/GetUsersRequest"));
     }
 
-    public GetUserResponse updateUser(UserDTO userDTO) {
-        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-        updateUserRequest.setUserDTO(userDTO);
+    public GetUserResponse saveUser(UserDTO userDTO) {
+        SaveUserRequest saveUserRequest = new SaveUserRequest();
+        saveUserRequest.setUserDTO(userDTO);
         return (GetUserResponse) getWebServiceTemplate()
-                .marshalSendAndReceive(USERS_URI, updateUserRequest,
-                        new SoapActionCallback(NAMESPACE_URI + "/UpdateUserRequest"));
+                .marshalSendAndReceive(USERS_URI, saveUserRequest,
+                        new SoapActionCallback(NAMESPACE_URI + "/SaveUserRequest"));
     }
 
     public GetBooleanResponse deleteUser(long chatId) {
