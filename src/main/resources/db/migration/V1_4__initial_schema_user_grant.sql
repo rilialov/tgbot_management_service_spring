@@ -1,0 +1,2 @@
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA tgbot_management TO tgbot_m_user;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA tgbot_management TO tgbot_m_user;
