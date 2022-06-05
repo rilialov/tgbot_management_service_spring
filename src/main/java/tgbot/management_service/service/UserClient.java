@@ -39,7 +39,7 @@ public class UserClient extends WebServiceGatewaySupport {
                         new SoapActionCallback(NAMESPACE_URI + "/SaveUserRequest"));
     }
 
-    public GetBooleanResponse deleteUser(long chatId) {
+    public GetBooleanResponse deleteUserById(long chatId) {
         DeleteUserByIdRequest deleteUserByIdRequest = new DeleteUserByIdRequest();
         deleteUserByIdRequest.setChatId(chatId);
         return (GetBooleanResponse) getWebServiceTemplate()
