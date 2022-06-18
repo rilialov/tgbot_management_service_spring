@@ -1,5 +1,7 @@
 package tgbot.management_service.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tgbot.management_service.entity.Tracking;
@@ -10,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Tag(name = "Tracking", description = "The Tracking API")
 @RestController
 @RequestMapping("/trackings")
 public class TrackingsController {
@@ -20,6 +23,7 @@ public class TrackingsController {
         this.trackingRepository = trackingRepository;
     }
 
+    @Operation(summary = "Gets all trackings")
     @GetMapping
     public List<Tracking> findAll() {
         Iterable<Tracking> iterable = trackingRepository.findAll();
@@ -27,6 +31,7 @@ public class TrackingsController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Gets tracking by id")
     @GetMapping(value = "/{id}")
     public Tracking findById(@PathVariable("id") Long id) {
         Tracking tracking = new Tracking();
@@ -37,6 +42,7 @@ public class TrackingsController {
         return tracking;
     }
 
+    @Operation(summary = "Creates new tracking")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Tracking create(@RequestBody Tracking resource) {
@@ -47,6 +53,7 @@ public class TrackingsController {
         return tracking;
     }
 
+    @Operation(summary = "Updates tracking")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") Long id, @RequestBody Tracking resource) {
@@ -61,6 +68,7 @@ public class TrackingsController {
         }
     }
 
+    @Operation(summary = "Deletes tracking")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {

@@ -1,5 +1,7 @@
 package tgbot.management_service.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tgbot.management_service.entity.Report;
@@ -10,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Tag(name = "Report", description = "The Report API")
 @RestController
 @RequestMapping("/reports")
 class ReportsController {
@@ -20,6 +23,7 @@ class ReportsController {
         this.reportRepository = reportRepository;
     }
 
+    @Operation(summary = "Gets all reports")
     @GetMapping
     public List<Report> findAll() {
         Iterable<Report> iterable = reportRepository.findAll();
@@ -27,6 +31,7 @@ class ReportsController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Gets report by id")
     @GetMapping(value = "/{id}")
     public Report findById(@PathVariable("id") Long id) {
         Report report = new Report();
@@ -37,6 +42,7 @@ class ReportsController {
         return report;
     }
 
+    @Operation(summary = "Creates new report")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Report create(@RequestBody Report resource) {
@@ -47,6 +53,7 @@ class ReportsController {
         return report;
     }
 
+    @Operation(summary = "Updates report")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") Long id, @RequestBody Report resource) {
@@ -60,6 +67,7 @@ class ReportsController {
         }
     }
 
+    @Operation(summary = "Deletes report")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {

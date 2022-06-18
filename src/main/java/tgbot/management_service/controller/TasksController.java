@@ -1,5 +1,7 @@
 package tgbot.management_service.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tgbot.management_service.entity.Task;
@@ -10,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Tag(name = "Task", description = "The Task API")
 @RestController
 @RequestMapping("/tasks")
 class TasksController {
@@ -20,6 +23,7 @@ class TasksController {
         this.taskRepository = taskRepository;
     }
 
+    @Operation(summary = "Gets all tasks")
     @GetMapping
     public List<Task> findAll() {
         Iterable<Task> iterable = taskRepository.findAll();
@@ -27,6 +31,7 @@ class TasksController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Gets task by id")
     @GetMapping(value = "/{id}")
     public Task findById(@PathVariable("id") Long id) {
         Task task = new Task();
@@ -37,6 +42,7 @@ class TasksController {
         return task;
     }
 
+    @Operation(summary = "Creates new task")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Task create(@RequestBody Task resource) {
@@ -47,6 +53,7 @@ class TasksController {
         return task;
     }
 
+    @Operation(summary = "Updates task")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") Long id, @RequestBody Task resource) {
@@ -59,6 +66,7 @@ class TasksController {
         }
     }
 
+    @Operation(summary = "Deletes task")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
