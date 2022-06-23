@@ -34,12 +34,8 @@ public class TrackingsController {
     @Operation(summary = "Gets tracking by id")
     @GetMapping(value = "/{id}")
     public Tracking findById(@PathVariable("id") Long id) {
-        Tracking tracking = new Tracking();
-        Optional<Tracking> optional = trackingRepository.findById(id);
-        if (optional.isPresent()) {
-            tracking = optional.get();
-        }
-        return tracking;
+        return trackingRepository.findById(id)
+                .orElseThrow(() -> new TrackingNotFoundException(id));
     }
 
     @Operation(summary = "Creates new tracking")

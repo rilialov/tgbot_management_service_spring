@@ -6,6 +6,7 @@ import org.springframework.ws.soap.client.core.SoapActionCallback;
 import tgbot.users.service.*;
 
 public class UserClient extends WebServiceGatewaySupport {
+
     @Value("${clients.server.uri}")
     private String SERVER_URI;
 

@@ -34,12 +34,8 @@ class ReportsController {
     @Operation(summary = "Gets report by id")
     @GetMapping(value = "/{id}")
     public Report findById(@PathVariable("id") Long id) {
-        Report report = new Report();
-        Optional<Report> optional = reportRepository.findById(id);
-        if (optional.isPresent()) {
-            report = optional.get();
-        }
-        return report;
+        return reportRepository.findById(id)
+                .orElseThrow(() -> new ReportNotFoundException(id));
     }
 
     @Operation(summary = "Creates new report")

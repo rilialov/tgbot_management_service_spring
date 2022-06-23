@@ -34,12 +34,8 @@ class TasksController {
     @Operation(summary = "Gets task by id")
     @GetMapping(value = "/{id}")
     public Task findById(@PathVariable("id") Long id) {
-        Task task = new Task();
-        Optional<Task> optional = taskRepository.findById(id);
-        if (optional.isPresent()) {
-            task = optional.get();
-        }
-        return task;
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
     }
 
     @Operation(summary = "Creates new task")
