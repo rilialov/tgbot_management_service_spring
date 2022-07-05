@@ -1,4 +1,4 @@
-package tgbot.management_service.controller;
+package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 
 @Tag(name = "Task", description = "The Task API")
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/v1/tasks")
 class TasksController {
 
     private final TaskRepository taskRepository;

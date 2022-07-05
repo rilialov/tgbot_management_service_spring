@@ -1,4 +1,4 @@
-package tgbot.management_service.controller;
+package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,16 +14,16 @@ import java.util.stream.StreamSupport;
 
 @Tag(name = "Tracking", description = "The Tracking API")
 @RestController
-@RequestMapping("/trackings")
-public class TrackingsController {
+@RequestMapping("/api/v1/tracking")
+public class TrackingController {
 
     private final TrackingRepository trackingRepository;
 
-    public TrackingsController(TrackingRepository trackingRepository) {
+    public TrackingController(TrackingRepository trackingRepository) {
         this.trackingRepository = trackingRepository;
     }
 
-    @Operation(summary = "Gets all trackings")
+    @Operation(summary = "Gets all tracking")
     @GetMapping
     public List<Tracking> findAll() {
         Iterable<Tracking> iterable = trackingRepository.findAll();

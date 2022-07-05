@@ -1,4 +1,4 @@
-package tgbot.management_service.controller;
+package tgbot.management_service.api.v1;
 
 class TaskNotFoundException extends RuntimeException {
 

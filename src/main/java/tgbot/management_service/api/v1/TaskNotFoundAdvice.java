@@ -1,4 +1,4 @@
-package tgbot.management_service.controller;
+package tgbot.management_service.api.v1;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-class ReportNotFoundAdvice {
+class TaskNotFoundAdvice {
 
     @ResponseBody
-    @ExceptionHandler(ReportNotFoundException.class)
+    @ExceptionHandler(TaskNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(ReportNotFoundException ex) {
+    String employeeNotFoundHandler(TaskNotFoundException ex) {
         return ex.getMessage();
     }
 }
