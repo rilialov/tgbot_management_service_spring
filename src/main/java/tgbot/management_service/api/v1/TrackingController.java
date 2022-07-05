@@ -2,15 +2,14 @@ package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tgbot.management_service.entity.Tracking;
 import tgbot.management_service.repository.TrackingRepository;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Tag(name = "Tracking", description = "The Tracking API")
 @RestController
@@ -25,10 +24,8 @@ public class TrackingController {
 
     @Operation(summary = "Gets all tracking")
     @GetMapping
-    public List<Tracking> findAll() {
-        Iterable<Tracking> iterable = trackingRepository.findAll();
-        return StreamSupport.stream(iterable.spliterator(), false)
-                .collect(Collectors.toList());
+    public Page<Tracking> findAll(Pageable pageable) {
+        return trackingRepository.findAll(pageable);
     }
 
     @Operation(summary = "Gets tracking by id")

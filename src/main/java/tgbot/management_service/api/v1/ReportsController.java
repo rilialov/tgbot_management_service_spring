@@ -2,15 +2,14 @@ package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tgbot.management_service.entity.Report;
 import tgbot.management_service.repository.ReportRepository;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Tag(name = "Report", description = "The Report API")
 @RestController
@@ -25,10 +24,8 @@ class ReportsController {
 
     @Operation(summary = "Gets all reports")
     @GetMapping
-    public List<Report> findAll() {
-        Iterable<Report> iterable = reportRepository.findAll();
-        return StreamSupport.stream(iterable.spliterator(), false)
-                .collect(Collectors.toList());
+    public Page<Report> findAll(Pageable pageable) {
+        return reportRepository.findAll(pageable);
     }
 
     @Operation(summary = "Gets report by id")
