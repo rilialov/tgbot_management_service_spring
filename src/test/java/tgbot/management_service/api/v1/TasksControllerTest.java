@@ -18,7 +18,12 @@ class TasksControllerTest extends AbstractTest {
     }
 
     @Test
-    void findAll() {
+    void findAll() throws Exception {
+        String uri = "/api/v1/tasks";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        assertEquals(200, mvcResult.getResponse().getStatus());
     }
 
     @Test
@@ -35,14 +40,50 @@ class TasksControllerTest extends AbstractTest {
     }
 
     @Test
-    void create() {
+    void notFound() throws Exception {
+        String uri = "/api/v1/tasks/10";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        assertEquals(404, mvcResult.getResponse().getStatus());
+        String content = mvcResult.getResponse().getContentAsString();
+        assertEquals(content, "Could not find task 10");
+    }
+
+
+    @Test
+    void create() throws Exception {
+        String uri = "/api/v1/tasks";
+        Task task = new Task("Test Task Name", "Test Task Note");
+
+        String inputJson = super.mapToJson(task);
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        assertEquals(201, mvcResult.getResponse().getStatus());
+        Task created = super.mapFromJson(mvcResult.getResponse().getContentAsString(), Task.class);
+        assertNotNull(created);
+        assertEquals("Test Task Name", created.getTaskName());
+        assertEquals("Test Task Note", created.getTaskNote());
     }
 
     @Test
-    void update() {
+    void update() throws Exception {
+        String uri = "/api/v1/tasks/3";
+        Task task = new Task("Changed Name", "Changed Note");
+
+        String inputJson = super.mapToJson(task);
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        assertEquals(200, mvcResult.getResponse().getStatus());
     }
 
     @Test
-    void delete() {
+    void delete() throws Exception {
+        String uri = "/api/v1/tasks/4";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.delete(uri)).andReturn();
+
+        assertEquals(200, mvcResult.getResponse().getStatus());
     }
 }
