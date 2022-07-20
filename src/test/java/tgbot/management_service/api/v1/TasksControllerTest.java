@@ -2,6 +2,7 @@ package tgbot.management_service.api.v1;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,6 +25,10 @@ class TasksControllerTest extends AbstractTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
         assertEquals(200, mvcResult.getResponse().getStatus());
+
+        Page<Task> tasks = super.mapPageFromJson(mvcResult.getResponse().getContentAsString(), Task.class);
+        assertNotNull(tasks);
+        assertTrue(tasks.getTotalElements() > 0);
     }
 
     @Test
