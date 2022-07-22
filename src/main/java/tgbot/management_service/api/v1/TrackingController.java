@@ -32,7 +32,7 @@ public class TrackingController {
     @GetMapping(value = "/{id}")
     public Tracking findById(@PathVariable("id") Long id) {
         return trackingRepository.findById(id)
-                .orElseThrow(() -> new TrackingNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("tracking", id));
     }
 
     @Operation(summary = "Creates new tracking")

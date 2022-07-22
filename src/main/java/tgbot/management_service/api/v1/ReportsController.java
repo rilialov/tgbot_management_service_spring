@@ -32,7 +32,7 @@ class ReportsController {
     @GetMapping(value = "/{id}")
     public Report findById(@PathVariable("id") Long id) {
         return reportRepository.findById(id)
-                .orElseThrow(() -> new ReportNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException("report", id));
     }
 
     @Operation(summary = "Creates new report")
