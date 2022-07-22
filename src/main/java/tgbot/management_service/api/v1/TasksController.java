@@ -32,7 +32,7 @@ class TasksController {
     @GetMapping(value = "/{id}")
     public Task findById(@PathVariable("id") Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("task", id));
+                .orElseThrow(() -> new ResourceNotFoundException("task", id));
     }
 
     @Operation(summary = "Creates new task")
