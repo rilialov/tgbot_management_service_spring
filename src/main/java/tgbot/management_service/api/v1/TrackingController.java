@@ -2,6 +2,7 @@ package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -22,12 +23,14 @@ public class TrackingController {
         this.trackingRepository = trackingRepository;
     }
 
+    @Cacheable("allTracking")
     @Operation(summary = "Gets all tracking")
     @GetMapping
     public Page<Tracking> findAll(Pageable pageable) {
         return trackingRepository.findAll(pageable);
     }
 
+    @Cacheable("tracking")
     @Operation(summary = "Gets tracking by id")
     @GetMapping(value = "/{id}")
     public Tracking findById(@PathVariable("id") Long id) {

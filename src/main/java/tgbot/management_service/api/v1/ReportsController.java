@@ -2,9 +2,9 @@ package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tgbot.management_service.entity.Report;
@@ -19,25 +19,23 @@ class ReportsController {
 
     private final ReportRepository reportRepository;
 
-    private final ReportsModelAssembler assembler;
-
-    ReportsController(ReportRepository reportRepository, ReportsModelAssembler assembler) {
+    ReportsController(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
-        this.assembler = assembler;
     }
 
+    @Cacheable("allReports")
     @Operation(summary = "Gets all reports")
     @GetMapping
     public Page<Report> findAll(Pageable pageable) {
         return reportRepository.findAll(pageable);
     }
 
+    @Cacheable("report")
     @Operation(summary = "Gets report by id")
     @GetMapping(value = "/{id}")
-    EntityModel<Report> findById(@PathVariable("id") Long id) {
-        Report report = reportRepository.findById(id)
+    public Report findById(@PathVariable("id") Long id) {
+        return reportRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("report", id));
-        return assembler.toModel(report);
     }
 
     @Operation(summary = "Creates new report")
