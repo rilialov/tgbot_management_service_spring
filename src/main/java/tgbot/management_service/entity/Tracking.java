@@ -91,4 +91,14 @@ public class Tracking {
     public int hashCode() {
         return Objects.hash(id, startTime, trackingNote);
     }
+
+    @Override
+    public String toString() {
+        return "Tracking{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", trackingNote='" + trackingNote + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

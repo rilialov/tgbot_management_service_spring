@@ -2,6 +2,8 @@ package tgbot.management_service.api.v1;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -9,10 +11,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import tgbot.management_service.entity.Report;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReportsControllerTest extends AbstractTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReportsControllerTest.class);
 
     @Override
     @BeforeEach
@@ -30,6 +35,11 @@ class ReportsControllerTest extends AbstractTest {
         Page<Report> reports = super.mapPageFromJson(mvcResult.getResponse().getContentAsString(), Report.class);
         assertNotNull(reports);
         assertTrue(reports.getTotalElements() > 0);
+
+        List<Report> reportList = reports.getContent();
+        for (int i = 0; i < reportList.size(); i++) {
+            logger.info(String.valueOf(reportList.get(i)));
+        }
     }
 
     @Test
@@ -43,6 +53,7 @@ class ReportsControllerTest extends AbstractTest {
         Report report = super.mapFromJson(mvcResult.getResponse().getContentAsString(), Report.class);
         assertNotNull(report);
         assertEquals(864000L, report.getFullTime());
+        logger.info(report.toString());
     }
 
     @Test

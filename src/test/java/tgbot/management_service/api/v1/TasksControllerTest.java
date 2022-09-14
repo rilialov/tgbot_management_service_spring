@@ -2,15 +2,21 @@ package tgbot.management_service.api.v1;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import tgbot.management_service.entity.Task;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TasksControllerTest extends AbstractTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(TasksControllerTest.class);
 
     @Override
     @BeforeEach
@@ -29,6 +35,11 @@ class TasksControllerTest extends AbstractTest {
         Page<Task> tasks = super.mapPageFromJson(mvcResult.getResponse().getContentAsString(), Task.class);
         assertNotNull(tasks);
         assertTrue(tasks.getTotalElements() > 0);
+
+        List<Task> taskList = tasks.getContent();
+        for (int i = 0; i < taskList.size(); i++) {
+            logger.info(String.valueOf(taskList.get(i)));
+        }
     }
 
     @Test
@@ -42,6 +53,7 @@ class TasksControllerTest extends AbstractTest {
         Task task = super.mapFromJson(mvcResult.getResponse().getContentAsString(), Task.class);
         assertNotNull(task);
         assertEquals("Create Service connected to telegram", task.getTaskName());
+        logger.info(task.toString());
     }
 
     @Test

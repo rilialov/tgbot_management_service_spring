@@ -2,6 +2,8 @@ package tgbot.management_service.api.v1;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -11,11 +13,14 @@ import tgbot.management_service.entity.Task;
 import tgbot.management_service.entity.Tracking;
 import tgbot.management_service.repository.TaskRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrackingControllerTest extends AbstractTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(TrackingControllerTest.class);
 
     @Autowired
     private TaskRepository taskRepository;
@@ -37,6 +42,11 @@ class TrackingControllerTest extends AbstractTest {
         Page<Tracking> tracking = super.mapPageFromJson(mvcResult.getResponse().getContentAsString(), Tracking.class);
         assertNotNull(tracking);
         assertTrue(tracking.getTotalElements() > 0);
+
+        List<Tracking> trackingList = tracking.getContent();
+        for (int i = 0; i < trackingList.size(); i++) {
+            logger.info(String.valueOf(trackingList.get(i)));
+        }
     }
 
     @Test
@@ -50,6 +60,7 @@ class TrackingControllerTest extends AbstractTest {
         Tracking tracking = super.mapFromJson(mvcResult.getResponse().getContentAsString(), Tracking.class);
         assertNotNull(tracking);
         assertEquals("Adding connection to users service", tracking.getTrackingNote());
+        logger.info(tracking.toString());
     }
 
     @Test
