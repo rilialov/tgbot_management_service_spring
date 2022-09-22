@@ -2,6 +2,7 @@ package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +39,7 @@ class TasksController {
                 .orElseThrow(() -> new ResourceNotFoundException("task", id));
     }
 
+    @CacheEvict(value = "allTasks", allEntries = true)
     @Operation(summary = "Creates new task")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -49,6 +51,7 @@ class TasksController {
         return task;
     }
 
+    @CacheEvict(value = { "allTasks", "task" }, allEntries = true)
     @Operation(summary = "Updates task")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -62,6 +65,7 @@ class TasksController {
         }
     }
 
+    @CacheEvict(value = "allTasks", allEntries = true)
     @Operation(summary = "Deletes task")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)

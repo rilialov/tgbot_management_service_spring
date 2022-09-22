@@ -17,7 +17,7 @@ class RestResponsePage<T> extends PageImpl<T> {
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public RestResponsePage(@JsonProperty("content") List<T> content, @JsonProperty("pageable") JsonNode pageable,
                             @JsonProperty("last") boolean last, @JsonProperty("totalPages") int totalPages,
-                            @JsonProperty("totalElements") Long totalElements, @JsonProperty("sort") JsonNode sort,
+                            @JsonProperty("totalElements") long totalElements, @JsonProperty("sort") JsonNode sort,
                             @JsonProperty("first") boolean first,
                             @JsonProperty("numberOfElements") int numberOfElements,
                             @JsonProperty("number") int number, @JsonProperty("size") int size,

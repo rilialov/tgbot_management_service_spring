@@ -67,7 +67,6 @@ class TasksControllerTest extends AbstractTest {
         assertEquals(content, "Could not find task 10");
     }
 
-
     @Test
     void create() throws Exception {
         String uri = "/api/v1/tasks";
@@ -82,6 +81,7 @@ class TasksControllerTest extends AbstractTest {
         assertNotNull(created);
         assertEquals("Test Task Name", created.getTaskName());
         assertEquals("Test Task Note", created.getTaskNote());
+        logger.info(created.toString());
     }
 
     @Test
