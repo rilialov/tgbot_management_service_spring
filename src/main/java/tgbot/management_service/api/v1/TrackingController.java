@@ -2,6 +2,7 @@ package tgbot.management_service.api.v1;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +39,7 @@ public class TrackingController {
                 .orElseThrow(() -> new ResourceNotFoundException("tracking", id));
     }
 
+    @CacheEvict(value = "allTracking", allEntries = true)
     @Operation(summary = "Creates new tracking")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -49,6 +51,7 @@ public class TrackingController {
         return tracking;
     }
 
+    @CacheEvict(value = { "allTracking", "tracking" }, allEntries = true)
     @Operation(summary = "Updates tracking")
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -64,6 +67,7 @@ public class TrackingController {
         }
     }
 
+    @CacheEvict(value = "allTracking", allEntries = true)
     @Operation(summary = "Deletes tracking")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
